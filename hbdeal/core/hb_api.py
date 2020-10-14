@@ -1,6 +1,7 @@
 import requests
 import json
 from copy import copy
+from datetime import datetime
 
 
 class HBApiError(Exception):
@@ -66,7 +67,39 @@ class HBDealApi(HBApiBase):
     def get_deals(self):
         params = {'properties': self.DEAL_PROPERTIES}
         data = self.get_data(self.DEALS_LIST_PATH, params=params)
-        return data['deals']
-    
+
+        deals = []
+        for deal_data in data['deals']:
+            deal = {
+                'id': int(deal_data['dealId']),
+                'name': self._get_deal_name(deal_data),
+                'stage': self._get_deal_stage(deal_data),
+                'amount': self._get_deal_amount(deal_data),
+                'close_date': self._get_deal_close_date(deal_data),
+            }
+            deals.append(deal)
+        return deals
+
+    def _get_property(self, deal_data, property_name):
+        try:
+            return deal_data['properties'][property_name]['value']
+        except KeyError:
+            return None
+
     def _get_deal_name(self, deal_data):
-        return data['data']
+        return self._get_property(deal_data, 'dealname')
+    
+    def _get_deal_stage(self, deal_data):
+        return self._get_property(deal_data, 'dealstage')
+    
+    def _get_deal_amount(self, deal_data):
+        amount = self._get_property(deal_data, 'amount')
+        if amount is not None:
+            amount = int(amount)
+        return amount
+    
+    def _get_deal_close_date(self, deal_data):
+        close_date = self._get_property(deal_data, 'closedate')
+        if close_date is not None:
+            close_date = datetime.fromtimestamp(int(close_date)/1000)
+        return close_date

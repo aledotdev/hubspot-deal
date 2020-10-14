@@ -1,7 +1,10 @@
 import unittest
 from unittest.mock import patch, MagicMock
+from datetime import datetime
 
 from hbdeal.core import hb_api
+
+from tests.utils.deal_list_data import DEAL_LIST_DATA
 
 
 HB_BASE_URL = 'https://api.hubapi.com'
@@ -66,3 +69,27 @@ class TestHBApiBase(unittest.TestCase):
         data = hb_api.HBApiBase(api_key='abc123').get_data('test/url', params=params, headers=headers)
         get_mock.assert_called_once_with('test/url', params=params, headers=headers)
         get_mock.return_value.json.assert_called_once_with()
+
+
+class HBDealApi(unittest.TestCase):
+
+    @patch.object(hb_api.HBApiBase, 'get_data')
+    def test_get_latest_deals(self, base_get_data_mock):
+        DEAL_PROPERTIES = ['dealname', 'dealstage', 'amount', 'closedate']
+        hb_api.HBDealApi(api_key='abc123').get_deals()
+        base_get_data_mock.assert_called_once_with('deals/v1/deal/paged', params={'properties': DEAL_PROPERTIES})
+    
+    @patch.object(hb_api.HBApiBase, 'get_data', return_value=DEAL_LIST_DATA)
+    def test_deal_list_atributes(self, base_get_data_mock):
+        data = hb_api.HBDealApi(api_key='abc123').get_deals()
+        expected_data = [
+            {'id': 931633510, 'name': 'Example deal',  'stage': 'presentationscheduled', 'amount': 100, 
+                'close_date': datetime(2019, 8, 2, 18, 58, 38, 291000)},
+            {'id': 2388597042, 'name': 'Example Deal 3', 'stage': 'closedwon', 'amount': 150, 
+                'close_date': datetime(2020, 7, 31, 14, 49, 18, 166000)},
+            {'id': 2388605589, 'name': 'Example Deal 2', 'stage': 'contractsent', 'amount': 200, 
+                'close_date': datetime(2020, 7, 31, 14, 47, 49, 488000)}
+        ]
+        self.assertEqual(data, expected_data)
+    
+
