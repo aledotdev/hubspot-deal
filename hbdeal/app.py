@@ -3,8 +3,9 @@ import logging.config
 
 from flask import Flask, Blueprint
 
-from hbdeal.api.common import api
-from hbdeal.api.deal import deal_api
+from hbdeal.core.models import db
+# from hbdeal.api.common import api
+# from hbdeal.api.deal import deal_api
 
 
 logging_conf_path = os.path.normpath(os.path.join(os.path.dirname(__file__), 'logging.conf'))
@@ -20,12 +21,12 @@ def initialize_app(settings_class=None):
     app.config.from_object(settings_class)
     log.info(">>>>> Setting up app config from {}".format(settings_class))
 
-    hbdealModel.load_model(app.config['MODEL_FILE_PATH'])
+    db.initialize_db(app)
 
     blueprint = Blueprint('api', __name__, url_prefix='/api')
-    api.init_app(blueprint)
-    api.add_namespace(breast_cancer_predictor_ns)
-    app.register_blueprint(blueprint)
+    # api.init_app(blueprint)
+    # api.add_namespace(breast_cancer_predictor_ns)
+    # app.register_blueprint(blueprint)
 
     return app
 

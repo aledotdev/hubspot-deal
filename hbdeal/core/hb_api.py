@@ -17,8 +17,7 @@ class HBApiBase(object):
         self.__base_headers = {}
         self.__api_key = api_key
         self.__token = token
-            
-    
+
     def get(self, url_path, headers=None, params=None):
 
         request_headers = self.base_headers
@@ -71,7 +70,7 @@ class HBDealApi(HBApiBase):
         deals = []
         for deal_data in data['deals']:
             deal = {
-                'id': int(deal_data['dealId']),
+                'deal_id': int(deal_data['dealId']),
                 'name': self._get_deal_name(deal_data),
                 'stage': self._get_deal_stage(deal_data),
                 'amount': self._get_deal_amount(deal_data),

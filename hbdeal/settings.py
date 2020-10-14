@@ -14,7 +14,9 @@ class BaseSettings(object):
     RESTPLUS_ERROR_404_HELP = False
 
     # DB Settings
-    MONGODB_SETTINGS = 'mongodb://localhost/hbdeal'
+    MONGODB_SETTINGS = {
+        'host': 'mongodb://localhost/hbdeal'
+    }
 
 
 class ProdSettings(BaseSettings):
