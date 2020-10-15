@@ -7,16 +7,19 @@ from datetime import datetime
 class HBApiError(Exception):
     pass
 
+
 class HBApiNotFoundError(HBApiError):
     pass
+
 
 class HBApiBase(object):
     BASE_URL = 'https://api.hubapi.com'
     
-    def __init__(self, api_key=None, token=None):
-        self.__base_headers = {}
-        self.__api_key = api_key
+    def __init__(self, token):
         self.__token = token
+        self.__base_headers = {
+            'Authorization': 'Bearer {}'.format(self.__token)
+        }
 
     def get(self, url_path, headers=None, params=None):
 
@@ -26,9 +29,6 @@ class HBApiBase(object):
 
         if not params:
             params = {}
-
-        if self.__api_key:
-            params['hapikey'] = self.__api_key
         
         url = '{}/{}'.format(self.BASE_URL, url_path)
 
@@ -49,18 +49,40 @@ class HBApiBase(object):
     @property
     def base_headers(self):
         headers = copy(self.__base_headers)
-        if self.__token:
-            headers['Authorization'] = 'Bearer {}'.format(self.__token)
         return headers
 
+
+class HBOauthApi(object):
+
+    BASE_URL = 'https://app.hubspot.com/oauth/authorize'
+
+    def __init__(self, client_id=None, refresh_token=None, redirect_uri=None, scope=None):
+        self.client_id = client_id
+        self.refresh_token = refresh_token
+        self.redirect_uri = redirect_uri
+        self.scope = scope
+
+    def get_auth(self):
+        params = {
+            'client_id': self.client_id,
+            'redirect_uri': self.redirect_uri,
+            'scope':  self.scope
+        }
+        response = request.get(self.BASE_URL, params=params)
+    
+    def get_token_from_code(self):
+        params = {
+            
+        }
 
 class HBDealApi(HBApiBase):
     DEALS_LIST_PATH = 'deals/v1/deal/paged'
     DEAL_PROPERTIES = [
         'dealname',
         'dealstage',
+        'dealtype',
         'amount',
-        'closedate'
+        'closedate',
     ]
 
     def get_deals(self):
@@ -73,8 +95,9 @@ class HBDealApi(HBApiBase):
                 'deal_id': int(deal_data['dealId']),
                 'name': self._get_deal_name(deal_data),
                 'stage': self._get_deal_stage(deal_data),
+                'deal_type': self._get_deal_type(deal_data),
                 'amount': self._get_deal_amount(deal_data),
-                'close_date': self._get_deal_close_date(deal_data),
+                'close_date': self._get_deal_close_date(deal_data)
             }
             deals.append(deal)
         return deals
@@ -90,6 +113,9 @@ class HBDealApi(HBApiBase):
     
     def _get_deal_stage(self, deal_data):
         return self._get_property(deal_data, 'dealstage')
+    
+    def _get_deal_type(self, deal_data):
+        return self._get_property(deal_data, 'dealtype')
     
     def _get_deal_amount(self, deal_data):
         amount = self._get_property(deal_data, 'amount')

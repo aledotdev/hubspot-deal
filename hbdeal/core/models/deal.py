@@ -2,8 +2,11 @@ from .db import db
 
 class User(db.Document):
     name = db.StringField(required=True, unique=True)
+    hb_client_id = db.StringField(required=True, unique=True)
+    hb_client_secret = db.StringField(required=True, unique=True)
     hb_token = db.StringField()
-    hb_api_key = db.StringField()
+    hb_refresh_token = db.StringField()
+    hb_token_expire_date = db.DateField()
 
 
 class Deal(db.Document):
@@ -13,5 +16,5 @@ class Deal(db.Document):
     stage = db.StringField()
     close_date = db.DateTimeField()
     amount = db.IntField()
-    # type = db.StringField(required=True)
+    deal_type = db.StringField()
     

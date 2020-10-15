@@ -1,198 +1,60 @@
 DEAL_LIST_DATA = {
     'deals': [{
-        'portalId': 62515,
-        'dealId': 931633510,
-        'isDeleted': False,
-        'associations': None,
+        'dealId': 1000000,
         'properties': {
             'dealname': {
-                'value': 'Example deal',
-                'timestamp': 1565733537449,
-                'source': 'CRM_UI',
-                'sourceId': 'dadams@hubspot.com',
-                'versions': [{
-                    'name': 'dealname',
-                    'value': 'Example deal',
-                    'timestamp': 1565733537449,
-                    'sourceId': 'dadams@hubspot.com',
-                    'source': 'CRM_UI',
-                    'sourceVid': []
-                }]
+                'value': 'deal 1'
+            },
+            'dealtype': {
+                'value': 'type 1'
             },
             'amount': {
-                'value': '100',
-                'timestamp': 1565733537449,
-                'source': 'CRM_UI',
-                'sourceId': 'dadams@hubspot.com',
-                'versions': [{
-                    'name': 'amount',
-                    'value': '100',
-                    'timestamp': 1565733537449,
-                    'sourceId': 'dadams@hubspot.com',
-                    'source': 'CRM_UI',
-                    'sourceVid': []
-                }]
+                'value': '100'
             },
             'closedate': {
-                'value': '1564783118291',
-                'timestamp': 1565733537449,
-                'source': 'CRM_UI',
-                'sourceId': 'dadams@hubspot.com',
-                'versions': [{
-                    'name': 'closedate',
-                    'value': '1564783118291',
-                    'timestamp': 1565733537449,
-                    'sourceId': 'dadams@hubspot.com',
-                    'source': 'CRM_UI',
-                    'sourceVid': []
-                }]
+                'value': '978321661000'
             },
             'dealstage': {
-                'value': 'presentationscheduled',
-                'timestamp': 1565733537449,
-                'source': 'CRM_UI',
-                'sourceId': 'dadams@hubspot.com',
-                'versions': [{
-                    'name': 'dealstage',
-                    'value': 'presentationscheduled',
-                    'timestamp': 1565733537449,
-                    'sourceId': 'dadams@hubspot.com',
-                    'source': 'CRM_UI',
-                    'sourceVid': []
-                }]
+                'value': 'stage 1'
             }
-        },
-        'imports': [],
-        'stateChanges': []
+        }
     }, {
-        'portalId': 62515,
-        'dealId': 2388597042,
-        'isDeleted': False,
-        'associations': None,
+        'dealId': 2000000,
         'properties': {
             'dealname': {
-                'value': 'Example Deal 3',
-                'timestamp': 1594230638759,
-                'source': 'CRM_UI',
-                'sourceId': 'zwolfson@hubspot.com',
-                'versions': [{
-                    'name': 'dealname',
-                    'value': 'Example Deal 3',
-                    'timestamp': 1594230638759,
-                    'sourceId': 'zwolfson@hubspot.com',
-                    'source': 'CRM_UI',
-                    'sourceVid': []
-                }]
+                'value': 'deal 2'
+            },
+            'dealtype': {
+                'value': 'type 2'
             },
             'amount': {
-                'value': '150',
-                'timestamp': 1594230598616,
-                'source': 'CRM_UI',
-                'sourceId': 'zwolfson@hubspot.com',
-                'versions': [{
-                    'name': 'amount',
-                    'value': '150',
-                    'timestamp': 1594230598616,
-                    'sourceId': 'zwolfson@hubspot.com',
-                    'source': 'CRM_UI',
-                    'sourceVid': []
-                }]
+                'value': '200'
             },
             'closedate': {
-                'value': '1596217758166',
-                'timestamp': 1594230598616,
-                'source': 'CRM_UI',
-                'sourceId': 'zwolfson@hubspot.com',
-                'versions': [{
-                    'name': 'closedate',
-                    'value': '1596217758166',
-                    'timestamp': 1594230598616,
-                    'sourceId': 'zwolfson@hubspot.com',
-                    'source': 'CRM_UI',
-                    'sourceVid': []
-                }]
+                'value': '1012626122000'
             },
             'dealstage': {
-                'value': 'closedwon',
-                'timestamp': 1594230598616,
-                'source': 'CRM_UI',
-                'sourceId': 'zwolfson@hubspot.com',
-                'versions': [{
-                    'name': 'dealstage',
-                    'value': 'closedwon',
-                    'timestamp': 1594230598616,
-                    'sourceId': 'zwolfson@hubspot.com',
-                    'source': 'CRM_UI',
-                    'sourceVid': []
-                }]
+                'value': 'stage 2'
             }
-        },
-        'imports': [],
-        'stateChanges': []
+        }
     }, {
-        'portalId': 62515,
-        'dealId': 2388605589,
-        'isDeleted': False,
-        'associations': None,
+        'dealId': 3000000,
         'properties': {
             'dealname': {
-                'value': 'Example Deal 2',
-                'timestamp': 1594230620290,
-                'source': 'CRM_UI',
-                'sourceId': 'zwolfson@hubspot.com',
-                'versions': [{
-                    'name': 'dealname',
-                    'value': 'Example Deal 2',
-                    'timestamp': 1594230620290,
-                    'sourceId': 'zwolfson@hubspot.com',
-                    'source': 'CRM_UI',
-                    'sourceVid': []
-                }]
+                'value': 'deal 3'
+            },
+            'dealtype': {
+                'value': 'type 3'
             },
             'amount': {
-                'value': '200',
-                'timestamp': 1594230507216,
-                'source': 'CRM_UI',
-                'sourceId': 'zwolfson@hubspot.com',
-                'versions': [{
-                    'name': 'amount',
-                    'value': '200',
-                    'timestamp': 1594230507216,
-                    'sourceId': 'zwolfson@hubspot.com',
-                    'source': 'CRM_UI',
-                    'sourceVid': []
-                }]
+                'value': '300'
             },
             'closedate': {
-                'value': '1596217669488',
-                'timestamp': 1594230507216,
-                'source': 'CRM_UI',
-                'sourceId': 'zwolfson@hubspot.com',
-                'versions': [{
-                    'name': 'closedate',
-                    'value': '1596217669488',
-                    'timestamp': 1594230507216,
-                    'sourceId': 'zwolfson@hubspot.com',
-                    'source': 'CRM_UI',
-                    'sourceVid': []
-                }]
+                'value': '1046671383000'
             },
             'dealstage': {
-                'value': 'contractsent',
-                'timestamp': 1594230507216,
-                'source': 'CRM_UI',
-                'sourceId': 'zwolfson@hubspot.com',
-                'versions': [{
-                    'name': 'dealstage',
-                    'value': 'contractsent',
-                    'timestamp': 1594230507216,
-                    'sourceId': 'zwolfson@hubspot.com',
-                    'source': 'CRM_UI',
-                    'sourceVid': []
-                }]
+                'value': 'stage 3'
             }
-        },
-        'imports': [],
-        'stateChanges': []
+        }
     }]
 }
