@@ -49,7 +49,6 @@ def user_add_or_edit(user_id=None):
         if request.args.get('added') == 'success':
             success = ['User has been added']
 
-
     return render_template('user_edit.html', user=user, errors=errors, success=success)
 
 

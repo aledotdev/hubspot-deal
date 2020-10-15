@@ -41,15 +41,14 @@ def update_user_hb_token(user, code=None, refresh_token=None):
 
 
 def get_user_hb_api_token(user):
-    token = user.hb_token
-    if not token:
+    if not user.hb_token:
         raise HBEmptyApiTokenError
 
     now = datetime.now()
     if user.hb_token_expire_date < now:
-        token = update_user_hb_token(user, refresh_token=user.hb_refresh_token)
+        update_user_hb_token(user, refresh_token=user.hb_refresh_token)
     
-    return token
+    return user.hb_token
 
 
 def update_last_deals(user):
