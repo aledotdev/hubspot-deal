@@ -18,6 +18,8 @@ class BaseSettings(object):
         'host': 'mongodb://localhost/hbdeal'
     }
 
+    HB_OAUTH_REDIRECT_URL = os.getenv('HB_OAUTH_REDIRECT_URL')
+
 
 class ProdSettings(BaseSettings):
     pass
@@ -26,6 +28,8 @@ class ProdSettings(BaseSettings):
 class DevSettings(BaseSettings):
     DEBUG = bool(os.getenv('HBDEAL_DEBUG', True))  # Do not use debug mode in production
     SECRET_KEY = "DEV-SECRET-123456789"
+    HB_OAUTH_REDIRECT_URL = os.getenv('HB_OAUTH_REDIRECT_URL', 'https://aledev.net/user/hb-oauth')
+    
 
 
 class TestSettings(BaseSettings):

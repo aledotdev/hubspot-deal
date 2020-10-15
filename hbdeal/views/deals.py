@@ -4,6 +4,7 @@ from flask import (
 
 from hbdeal.services import deal_service
 from hbdeal.core.models.deal import User
+from hbdeal.core.hb_api import HBEmptyApiTokenError
 
 
 bp = Blueprint('deals', __name__, url_prefix='/deals')
@@ -18,8 +19,11 @@ def user_deal_list(user_id):
 
 
 @bp.route('/<user_id>/update', methods=('GET',))
-def user_deal_list(user_id):
+def user_deals_update(user_id):
     user = deal_service.get_user(user_id)
-    deals = deal_service.get_user_deals(user)
+    try:
+        deals = deal_service.update_last_deals(user)
+    except HBEmptyApiTokenError:
+        return redirect(deal_service.get_user_hb_api_auth_url(user))
 
-    return render_template('deals_list.html', user=user, deals=deals)
+    return redirect("/deals/{}".format(user.id))

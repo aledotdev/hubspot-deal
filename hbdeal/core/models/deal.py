@@ -6,7 +6,7 @@ class User(db.Document):
     hb_client_secret = db.StringField(required=True, unique=True)
     hb_token = db.StringField()
     hb_refresh_token = db.StringField()
-    hb_token_expire_date = db.DateField()
+    hb_token_expire_date = db.DateTimeField()
 
 
 class Deal(db.Document):
@@ -17,4 +17,3 @@ class Deal(db.Document):
     close_date = db.DateTimeField()
     amount = db.IntField()
     deal_type = db.StringField()
-    

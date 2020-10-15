@@ -4,6 +4,24 @@ from copy import copy
 from datetime import datetime
 
 
+SETTINGS = {
+    'API_BASE_URL': 'https://api.hubapi.com',
+    'OAUTH_API_GET_TOKEN_URL': 'https://api.hubapi.com/oauth/v1/token',
+    'SCOPE': 'contacts',
+    'OAUTH_AUTHORIZE_URL': 'https://app.hubspot.com/oauth/authorize',
+    'OAUTH_REDIRECT_URL': None
+}
+
+
+def configure(**kwargs):
+    SETTINGS.update(kwargs)
+
+
+def appinit(app):
+    configure(OAUTH_REDIRECT_URL=app.config['HB_OAUTH_REDIRECT_URL'])
+
+
+
 class HBApiError(Exception):
     pass
 
@@ -12,9 +30,16 @@ class HBApiNotFoundError(HBApiError):
     pass
 
 
+class HBEmptyApiTokenError(HBApiError):
+    pass
+
+
+class HBApiGetTokenError(HBApiError):
+    pass
+
+
 class HBApiBase(object):
-    BASE_URL = 'https://api.hubapi.com'
-    
+
     def __init__(self, token):
         self.__token = token
         self.__base_headers = {
@@ -30,7 +55,7 @@ class HBApiBase(object):
         if not params:
             params = {}
         
-        url = '{}/{}'.format(self.BASE_URL, url_path)
+        url = '{}/{}'.format(SETTINGS['API_BASE_URL'], url_path)
 
         response = requests.get(url, headers=request_headers, params=params)
         print('GET request to Hubspot: {}'.format(response.url))
@@ -54,26 +79,44 @@ class HBApiBase(object):
 
 class HBOauthApi(object):
 
-    BASE_URL = 'https://app.hubspot.com/oauth/authorize'
-
-    def __init__(self, client_id=None, refresh_token=None, redirect_uri=None, scope=None):
-        self.client_id = client_id
-        self.refresh_token = refresh_token
-        self.redirect_uri = redirect_uri
-        self.scope = scope
-
-    def get_auth(self):
+    def get_auth_url(self, client_id, state=None):
         params = {
-            'client_id': self.client_id,
-            'redirect_uri': self.redirect_uri,
-            'scope':  self.scope
+            'client_id': client_id,
+            'redirect_uri': SETTINGS['OAUTH_REDIRECT_URL'],
+            'scope': SETTINGS['SCOPE']
         }
-        response = request.get(self.BASE_URL, params=params)
+
+        if state:
+            params['state'] = state
+
+        request = requests.PreparedRequest()
+        request.prepare_url(SETTINGS['OAUTH_AUTHORIZE_URL'], params=params)
+        return request.url
     
-    def get_token_from_code(self):
+    def update_token(self, client_id, client_secret, code=None, refresh_token=None):
         params = {
-            
+            'client_id': client_id,
+            'client_secret': client_secret,
         }
+
+        if code:
+            params.update({
+                'code': code,
+                'grant_type': 'authorization_code',
+                'redirect_uri': SETTINGS['OAUTH_REDIRECT_URL']
+            })  
+        elif refresh_token:
+            params.update({
+                'refresh_token': refresh_token,
+                'grant_type': 'refresh_token',
+            })
+
+        response = requests.post(SETTINGS['OAUTH_API_GET_TOKEN_URL'], data=params)
+
+        if response.status_code != 200:
+            raise HBApiGetTokenError(response.text)
+        
+        return response.json()
 
 class HBDealApi(HBApiBase):
     DEALS_LIST_PATH = 'deals/v1/deal/paged'

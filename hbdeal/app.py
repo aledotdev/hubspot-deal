@@ -4,8 +4,7 @@ import logging.config
 from flask import Flask, Blueprint
 
 from hbdeal.core.models import db
-# from hbdeal.api.common import api
-# from hbdeal.api.deal import deal_api
+from hbdeal.core import hb_api
 
 
 logging_conf_path = os.path.normpath(os.path.join(os.path.dirname(__file__), 'logging.conf'))
@@ -31,6 +30,8 @@ def initialize_app(settings_class=None):
     db.initialize_db(app)
 
     register_views(app)
+
+    hb_api.appinit(app)
 
     return app
 
