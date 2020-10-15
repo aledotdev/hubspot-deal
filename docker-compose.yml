@@ -1,13 +1,17 @@
-web:
+version: '3.7'
+
+services:
+  web:
     build: .
-    command: python -u app.py
+    command: gunicorn --worker-tmp-dir /dev/shm --log-file=- -w 2 -b :5000 "hbdeal.app:initialize_app()"
     ports:
       - "5000:5000"
-    volumes:
-      - .:/todo
-    links:
-      - db
-db:
+    depends_on:
+      - mongo
+
+  mongo:
     image: mongo:4.4
     ports:
       - 27017:27017
+    volumes: 
+      - ~/mongo/data:/data/db

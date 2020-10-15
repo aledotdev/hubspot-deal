@@ -7,9 +7,9 @@ from hbdeal.core.models import db
 from hbdeal.core import hb_api
 
 
-logging_conf_path = os.path.normpath(os.path.join(os.path.dirname(__file__), 'logging.conf'))
-logging.config.fileConfig(logging_conf_path)
-log = logging.getLogger(__name__)
+# logging_conf_path = os.path.normpath(os.path.join(os.path.dirname(__file__), 'logging.conf'))
+# logging.config.fileConfig(logging_conf_path)
+# log = logging.getLogger(__name__)
 
 
 def register_views(app):
@@ -25,7 +25,7 @@ def initialize_app(settings_class=None):
         settings_class = os.getenv('HBDEAL_SETTING_CLASS', 'hbdeal.settings.DevSettings')
 
     app.config.from_object(settings_class)
-    log.info(">>>>> Setting up app config from {}".format(settings_class))
+    # log.info(">>>>> Setting up app config from {}".format(settings_class))
 
     db.initialize_db(app)
 

@@ -47,7 +47,7 @@ def get_user_hb_api_token(user):
     now = datetime.now()
     if user.hb_token_expire_date < now:
         update_user_hb_token(user, refresh_token=user.hb_refresh_token)
-    
+
     return user.hb_token
 
 
