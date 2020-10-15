@@ -13,6 +13,13 @@ logging.config.fileConfig(logging_conf_path)
 log = logging.getLogger(__name__)
 
 
+def register_views(app):
+    from hbdeal.views import user, deals
+
+    app.register_blueprint(user.bp)
+    app.register_blueprint(deals.bp)
+
+
 def initialize_app(settings_class=None):
     app = Flask(__name__)
     if settings_class is None:
@@ -23,10 +30,7 @@ def initialize_app(settings_class=None):
 
     db.initialize_db(app)
 
-    blueprint = Blueprint('api', __name__, url_prefix='/api')
-    # api.init_app(blueprint)
-    # api.add_namespace(breast_cancer_predictor_ns)
-    # app.register_blueprint(blueprint)
+    register_views(app)
 
     return app
 

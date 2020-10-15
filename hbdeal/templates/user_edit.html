@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  User {% if user.id %}Edit{% else %}Add{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="section">
+  <h1 class="title">User {% if user.id %}Edit{% else %}Add{% endif %}</h1>
+</div>
+{% if errors %}
+  <div class="section">
+  {% for error in errors %}
+    <div class="notification is-danger">
+      <button class="delete"></button>
+      {{ error }}
+    </div>
+  {% endfor %}
+  </div>
+{% endif %}
+{% if success %}
+  <div class="section">
+  {% for ss in success %}
+    <div class="notification is-primary">
+      <button class="delete"></button>
+      {{ ss }}
+    </div>
+  {% endfor %}
+  </div>
+{% endif %}
+<form method="POST">
+<div class="field">
+  <label class="label">Name</label>
+  <div class="control">
+    <input class="input" type="text" placeholder="Text input" name="name" value="{{ user.name or '' }}">
+  </div>
+</div>
+
+<div class="field">
+  <label class="label">HB Client ID</label>
+  <div class="control">
+    <input class="input" type="text" placeholder="Text input", name="hb_client_id" value="{{ user.hb_client_id or '' }}">
+  </div>
+</div>
+
+<div class="field">
+  <label class="label">HB Client SECRET</label>
+  <div class="control">
+    <input class="input" type="text" placeholder="Text input", name="hb_client_secret" value="{{ user.hb_client_secret or ''}}">
+  </div>
+</div>
+
+<div class="field">
+  <div class="field is-grouped">
+  <div class="control">
+    <button class="button is-link">Submit</button>
+  </div>
+  <div class="control">
+    <a href="/user" class="button is-link is-light">Back</a>
+  </div>
+</div>
+</form>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}User List{% endblock %}
+
+{% block content %}
+    <div class="section">
+        <div class="level">
+            <div class="level-left">
+                <h1 class="title">User List</h1>
+            </div>
+            <div class="level-right">
+                <div class="buttons">
+                    <a href="/user/add" class="button is-primary">Add User</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="section">
+        {% for user in users %}
+            <div class="columns">
+              <div class="column">{{ user.name }}</div>
+              <div class="column">{{ user.hb_client_id }}</div>
+              <div class="column">{{ user.hb_client_secret }}</div>
+              <div class="column" style="text-align:right;">
+              <a href="/deals/{{ user.id }}" class="button is-link">Deals</a>
+                <a href="/user/edit/{{ user.id }}" class="button is-link">Edit</a>
+                <a href="/user/edit/{{ user.id }}" class="button is-danger">Delete</a>
+              </div>
+            </div>
+        {% endfor %}
+    </div>
+    
+{% endblock %}

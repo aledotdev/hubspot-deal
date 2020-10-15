@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Deals list for {{ user.name }}{% endblock %}
+
+{% block content %}
+    <div class="section">
+        <div class="level">
+            <div class="level-left">
+                <h1 class="title">Deals list for {{ user.name }}</h1>
+            </div>
+            <div class="level-right">
+                <div class="buttons">
+                    <a href="/deals/{{ user.id }}/update" class="button is-primary">Update deals</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="section">
+        {% for deal in deals %}
+            <div class="columns">
+              <div class="column">{{ deal.name }}</div>
+              <div class="column">{{ deal.stage }}</div>
+              <div class="column">{{ deal.amount }}</div>
+              <div class="column">{{ deal.close_date }}</div>
+            </div>
+        {% endfor %}
+    </div>
+    
+{% endblock %}
