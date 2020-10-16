@@ -11,7 +11,7 @@ class User(db.Document):
 
 class Deal(db.Document):
     user = db.ReferenceField(User, required=True)
-    deal_id = db.IntField(required=True, unique=True)
+    deal_id = db.IntField(required=True)
     name = db.StringField(required=True)
     stage = db.StringField()
     close_date = db.DateTimeField()

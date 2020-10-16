@@ -2,6 +2,8 @@ version: '3.7'
 
 services:
   web:
+    env_file: 
+      - env_file
     build: .
     command: gunicorn --worker-tmp-dir /dev/shm --log-file=- -w 2 -b :5000 "hbdeal.app:initialize_app()"
     ports:
