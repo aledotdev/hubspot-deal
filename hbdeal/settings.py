@@ -17,7 +17,7 @@ class BaseSettings(object):
     MONGODB_SETTINGS = {
         'db': 'hbdeal',
         'port': 27017,
-        'host': 'mongo'
+        'host': os.getenv('MONGODB_HOST', 'localhost')
     }
 
     HB_OAUTH_REDIRECT_URL = os.getenv('HB_OAUTH_REDIRECT_URL')

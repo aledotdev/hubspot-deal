@@ -1,5 +1,5 @@
 from flask import (
-    Blueprint, flash, g, redirect, render_template, request, session, url_for
+    Blueprint, flash, g, redirect, render_template, request, session, url_for, current_app
 )
 from mongoengine.errors import NotUniqueError
 
@@ -48,8 +48,9 @@ def user_add_or_edit(user_id=None):
     else:
         if request.args.get('added') == 'success':
             success = ['User has been added']
-
-    return render_template('user_edit.html', user=user, errors=errors, success=success)
+    oauth_redirect_url = current_app.config['HB_OAUTH_REDIRECT_URL']
+    return render_template('user_edit.html', user=user, errors=errors, 
+                            success=success, oauth_redirect_url=oauth_redirect_url)
 
 
 @bp.route('/hb-oauth', methods=('GET',))
