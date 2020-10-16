@@ -39,6 +39,7 @@ class HBApiGetTokenError(HBApiError):
 
 
 class HBApiBase(object):
+    """ Base class to handle Hubspot API calls """
 
     def __init__(self, token):
         self.__token = token
@@ -78,8 +79,10 @@ class HBApiBase(object):
 
 
 class HBOauthApi(object):
+    """ Class to handle OAuth flow for Hubspot API """
 
     def get_auth_url(self, client_id, state=None):
+        """ Get Hubspot OAuth Authorization URL """
         params = {
             'client_id': client_id,
             'redirect_uri': SETTINGS['OAUTH_REDIRECT_URL'],
@@ -94,6 +97,8 @@ class HBOauthApi(object):
         return request.url
     
     def update_token(self, client_id, client_secret, code=None, refresh_token=None):
+        """ Refresh user token """
+
         params = {
             'client_id': client_id,
             'client_secret': client_secret,
@@ -118,7 +123,10 @@ class HBOauthApi(object):
         
         return response.json()
 
+
 class HBDealApi(HBApiBase):
+    """ API to retrieve data for Hubspot deals """
+
     DEALS_LIST_PATH = 'deals/v1/deal/paged'
     DEAL_PROPERTIES = [
         'dealname',

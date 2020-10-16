@@ -24,6 +24,7 @@ def user_deals_update(user_id):
     try:
         deals = deal_service.update_last_deals(user)
     except HBEmptyApiTokenError:
+        # If User has not a TOKEN it will redirected to get a new token from Hubspot
         return redirect(deal_service.get_user_hb_api_auth_url(user))
 
     return redirect("/deals/{}".format(user.id))

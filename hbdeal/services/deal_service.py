@@ -27,6 +27,7 @@ def get_user_list():
 
 
 def get_user_hb_api_auth_url(user):
+    """ Get Hubspot OAuth Authorization URL """
     oauth_api = HBOauthApi()
     return oauth_api.get_auth_url(user.hb_client_id, state=user.id)
 
@@ -41,6 +42,7 @@ def update_user_hb_token(user, code=None, refresh_token=None):
 
 
 def get_user_hb_api_token(user):
+    """ Get User Hubspot Token and updates it if the token expired """
     if not user.hb_token:
         raise HBEmptyApiTokenError
 
